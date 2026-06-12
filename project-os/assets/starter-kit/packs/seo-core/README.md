@@ -13,13 +13,17 @@ from the first version.
 - FAQPage schema is not promised for commercial rich results.
 - AI-search readiness requires crawlable text, clear entity signals, and
   citable passages.
+- Google Search Console verification and sitemap submission are launch gates for
+  public sites.
 
 ## Setup Checklist
 
 - [ ] Add `seo-policy.json`.
+- [ ] Add `analytics-policy.json` for GA4 and Google Search Console.
 - [ ] Add `docs/SEO-GUIDELINES.md` or equivalent.
 - [ ] Add sitemap and robots decisions before public launch.
+- [ ] Verify Google Search Console before public launch.
+- [ ] Submit the production sitemap in Google Search Console.
 - [ ] Add image alt text and dimension checks.
 - [ ] Add schema validation for public templates.
 - [ ] Decide whether `llms.txt` is useful for the project.
-

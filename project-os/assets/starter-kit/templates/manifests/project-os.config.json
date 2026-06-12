@@ -35,7 +35,8 @@
     "email": "unset",
     "cms": "unset",
     "ai": "unset",
-    "analytics": "unset"
+    "analytics": "ga4",
+    "searchConsole": "google-search-console"
   },
   "automation": {
     "primaryReviewLane": "codex-or-claude-pr-queue",
@@ -47,7 +48,6 @@
   "portability": {
     "extractable": true,
     "profile": "{{PROFILE}}",
-    "packs": ["project-os-core", "cloudflare-fullstack", "seo-core"]
+    "packs": ["project-os-core", "cloudflare-fullstack", "seo-core", "analytics-search"]
   }
 }
-

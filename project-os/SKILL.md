@@ -1,6 +1,6 @@
 ---
 name: project-os
-description: Bootstrap or validate a reusable project operating system for new or existing repositories. Use when the user wants to set up Claude and Codex workflows, review verdict gates, project manifests, automation policy, Cloudflare-first infrastructure guidance, SEO/GEO policy, AI model tracking, or a secrets manifest in any project without depending on a source project.
+description: Bootstrap or validate a reusable project operating system for new or existing repositories. Use when the user wants to set up Claude and Codex workflows, review verdict gates, project manifests, automation policy, Cloudflare-first infrastructure guidance, SEO/GEO policy, GA4/GSC launch gates, AI model tracking, or a secrets manifest in any project without depending on a source project.
 ---
 
 # Project OS
@@ -64,6 +64,8 @@ overwrite unrelated user work casually.
   and settings hooks.
 - `assets/starter-kit/packs/cloudflare-fullstack/`: Cloudflare-first guidance.
 - `assets/starter-kit/packs/seo-core/`: SEO/GEO guidance.
+- `assets/starter-kit/packs/analytics-search/`: GA4 and Google Search Console
+  guidance.
 
 Resolve paths relative to this skill directory. If the skill is installed at
 `~/.codex/skills/project-os`, the bootstrap script is:
@@ -95,7 +97,8 @@ node path/to/project-os/scripts/check-project-os.mjs --root /path/to/repo
 ```
 
 The checker validates required manifests, JSON parsing, secret-value policy,
-automation defaults, SEO baseline, and Claude/Codex marker separation.
+automation defaults, SEO baseline, GA4/GSC launch gates, and Claude/Codex
+marker separation.
 
 ## When Publishing Or Updating This Skill
 

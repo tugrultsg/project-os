@@ -5,8 +5,9 @@ new or existing repositories.
 
 It installs shared manifests plus separate Claude and Codex adapters, so a repo
 can carry the same development workflow, review gates, automation policy,
-Cloudflare-first infrastructure guidance, SEO/GEO baseline, AI model policy,
-and secrets inventory without depending on a previous project.
+Cloudflare-first infrastructure guidance, SEO/GEO baseline, GA4/GSC launch
+gates, AI model policy, and secrets inventory without depending on a previous
+project.
 
 ## Install
 
@@ -58,6 +59,7 @@ node ~/.codex/skills/project-os/scripts/check-project-os.mjs --root /path/to/rep
 - `project-os.config.json`
 - `automation-policy.json`
 - `ai-models.json`
+- `analytics-policy.json`
 - `seo-policy.json`
 - `secrets.manifest.json`
 - `AGENTS.md`
@@ -68,6 +70,7 @@ node ~/.codex/skills/project-os/scripts/check-project-os.mjs --root /path/to/rep
 - `.claude/settings.json`
 - `docs/project-os-packs/cloudflare-fullstack.md`
 - `docs/project-os-packs/seo-core.md`
+- `docs/project-os-packs/analytics-search.md`
 
 ## Safety
 

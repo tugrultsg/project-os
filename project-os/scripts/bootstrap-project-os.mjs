@@ -40,6 +40,7 @@ const files = [
   ['templates/manifests/project-os.config.json', 'project-os.config.json'],
   ['templates/manifests/automation-policy.json', 'automation-policy.json'],
   ['templates/manifests/ai-models.json', 'ai-models.json'],
+  ['templates/manifests/analytics-policy.json', 'analytics-policy.json'],
   ['templates/manifests/seo-policy.json', 'seo-policy.json'],
   ['templates/manifests/secrets.manifest.json', 'secrets.manifest.json'],
   ['adapters/codex/AGENTS.md', 'AGENTS.md'],
@@ -49,7 +50,8 @@ const files = [
   ['adapters/claude/agents/blueprint.md', '.claude/agents/blueprint.md'],
   ['adapters/claude/settings.json', '.claude/settings.json'],
   ['packs/cloudflare-fullstack/README.md', 'docs/project-os-packs/cloudflare-fullstack.md'],
-  ['packs/seo-core/README.md', 'docs/project-os-packs/seo-core.md']
+  ['packs/seo-core/README.md', 'docs/project-os-packs/seo-core.md'],
+  ['packs/analytics-search/README.md', 'docs/project-os-packs/analytics-search.md']
 ];
 
 function valueFor(name) {

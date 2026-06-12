@@ -118,6 +118,7 @@ const requiredRootJson = [
   'project-os.config.json',
   'automation-policy.json',
   'ai-models.json',
+  'analytics-policy.json',
   'seo-policy.json',
   'secrets.manifest.json',
 ];
@@ -128,6 +129,7 @@ const requiredSchemas = [
   'contracts/project-os.schema.json',
   'contracts/automation-policy.schema.json',
   'contracts/ai-models.schema.json',
+  'contracts/analytics-policy.schema.json',
   'contracts/seo-policy.schema.json',
   'contracts/secrets.manifest.schema.json',
 ];
@@ -156,6 +158,15 @@ if (projectConfig) {
   if (!projectConfig.portability?.extractable) {
     fail('project-os.config.json must mark portability.extractable as true.');
   }
+  if (projectConfig.providers?.analytics !== 'ga4') {
+    fail('project-os.config.json providers.analytics must be ga4.');
+  }
+  if (projectConfig.providers?.searchConsole !== 'google-search-console') {
+    fail('project-os.config.json providers.searchConsole must be google-search-console.');
+  }
+  if (!projectConfig.portability?.packs?.includes('analytics-search')) {
+    fail('project-os.config.json portability.packs must include analytics-search.');
+  }
 }
 
 const automationPolicy = rootJson.get('automation-policy.json');
@@ -174,6 +185,61 @@ if (aiModels) {
   }
   if (aiModels.policy?.fallbackRequiredForCustomerFacingAI !== true) {
     fail('ai-models.json must require fallbacks for customer-facing AI.');
+  }
+}
+
+const analyticsPolicy = rootJson.get('analytics-policy.json');
+if (analyticsPolicy) {
+  const ga4 = analyticsPolicy.googleAnalytics4 || {};
+  if (ga4.requiredForPublicWeb !== true) {
+    fail('analytics-policy.json must require GA4 for public web projects.');
+  }
+  if (ga4.consentModeRequired !== true) {
+    fail('analytics-policy.json must require GA4 consent mode.');
+  }
+  if (ga4.piiCollectionAllowed !== false) {
+    fail('analytics-policy.json must disallow PII collection in analytics events.');
+  }
+  if (ga4.serviceAccountSecretName && !/^[A-Z0-9_]+$/.test(ga4.serviceAccountSecretName)) {
+    fail('analytics-policy.json googleAnalytics4.serviceAccountSecretName must be uppercase snake case.');
+  }
+  const productionGa4 = ga4.environments?.production?.measurementId;
+  const stagingGa4 = ga4.environments?.staging?.measurementId;
+  if (productionGa4 && stagingGa4 && productionGa4 !== 'unset' && productionGa4 === stagingGa4) {
+    fail('analytics-policy.json production and staging GA4 measurement IDs must not match.');
+  }
+
+  const gsc = analyticsPolicy.googleSearchConsole || {};
+  if (gsc.requiredForPublicWeb !== true) {
+    fail('analytics-policy.json must require Google Search Console for public web projects.');
+  }
+  if (gsc.sitemapSubmissionRequired !== true) {
+    fail('analytics-policy.json must require sitemap submission in Google Search Console.');
+  }
+  if (!['domain', 'url-prefix', 'unset'].includes(gsc.propertyType)) {
+    fail('analytics-policy.json googleSearchConsole.propertyType must be domain, url-prefix, or unset.');
+  }
+  if (gsc.serviceAccountSecretName && !/^[A-Z0-9_]+$/.test(gsc.serviceAccountSecretName)) {
+    fail('analytics-policy.json googleSearchConsole.serviceAccountSecretName must be uppercase snake case.');
+  }
+
+  const events = analyticsPolicy.events || {};
+  if (events.pageViewRequired !== true) {
+    fail('analytics-policy.json must require page_view tracking.');
+  }
+  if (events.eventsMustAvoidPii !== true) {
+    fail('analytics-policy.json must require events to avoid PII.');
+  }
+
+  const gates = analyticsPolicy.launchGates || {};
+  if (gates.ga4InstalledBeforePublicLaunch !== true) {
+    fail('analytics-policy.json must gate public launch on GA4 installation.');
+  }
+  if (gates.gscVerifiedBeforePublicLaunch !== true) {
+    fail('analytics-policy.json must gate public launch on Google Search Console verification.');
+  }
+  if (gates.sitemapSubmittedBeforePublicLaunch !== true) {
+    fail('analytics-policy.json must gate public launch on sitemap submission.');
   }
 }
 
@@ -206,6 +272,16 @@ if (secretsManifest) {
     }
     if (!/^[A-Z0-9_]+$/.test(secret.name || '')) {
       fail(`Secret name must be uppercase snake case: ${secret.name || '<missing>'}.`);
+    }
+  }
+  const secretNames = new Set((secretsManifest.secrets || []).map((secret) => secret.name));
+  const analytics = rootJson.get('analytics-policy.json');
+  for (const secretName of [
+    analytics?.googleAnalytics4?.serviceAccountSecretName,
+    analytics?.googleSearchConsole?.serviceAccountSecretName
+  ].filter(Boolean)) {
+    if (!secretNames.has(secretName)) {
+      fail(`secrets.manifest.json must include ${secretName} referenced by analytics-policy.json.`);
     }
   }
 }

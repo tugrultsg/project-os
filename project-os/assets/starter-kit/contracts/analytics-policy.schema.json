@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-os.local/contracts/analytics-policy.schema.json",
+  "title": "Analytics And Search Instrumentation Policy",
+  "type": "object",
+  "required": ["version", "lastReviewed", "googleAnalytics4", "googleSearchConsole", "events", "launchGates", "monitoring"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "lastReviewed": { "type": "string", "minLength": 1 },
+    "googleAnalytics4": {
+      "type": "object",
+      "required": ["requiredForPublicWeb", "measurementId", "propertyId", "consentModeRequired", "piiCollectionAllowed", "environments"],
+      "properties": {
+        "requiredForPublicWeb": { "type": "boolean" },
+        "measurementId": { "type": "string" },
+        "propertyId": { "type": "string" },
+        "consentModeRequired": { "type": "boolean" },
+        "piiCollectionAllowed": { "type": "boolean" },
+        "debugModeAllowedOutsideProduction": { "type": "boolean" },
+        "serviceAccountSecretName": { "type": "string" },
+        "environments": { "type": "object" }
+      }
+    },
+    "googleSearchConsole": {
+      "type": "object",
+      "required": ["requiredForPublicWeb", "propertyType", "propertyUrl", "verificationMethod", "sitemapSubmissionRequired"],
+      "properties": {
+        "requiredForPublicWeb": { "type": "boolean" },
+        "propertyType": { "enum": ["domain", "url-prefix", "unset"] },
+        "propertyUrl": { "type": "string" },
+        "verificationMethod": { "type": "string" },
+        "sitemapSubmissionRequired": { "type": "boolean" },
+        "urlInspectionApiOptional": { "type": "boolean" },
+        "serviceAccountSecretName": { "type": "string" }
+      }
+    },
+    "events": { "type": "object" },
+    "launchGates": { "type": "object" },
+    "monitoring": { "type": "object" }
+  }
+}

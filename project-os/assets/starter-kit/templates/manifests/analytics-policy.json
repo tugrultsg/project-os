@@ -1,0 +1,52 @@
+{
+  "version": "0.1.0",
+  "lastReviewed": "{{CURRENT_DATE}}",
+  "googleAnalytics4": {
+    "requiredForPublicWeb": true,
+    "measurementId": "unset",
+    "propertyId": "unset",
+    "consentModeRequired": true,
+    "piiCollectionAllowed": false,
+    "debugModeAllowedOutsideProduction": true,
+    "serviceAccountSecretName": "GOOGLE_ANALYTICS_SERVICE_ACCOUNT_JSON",
+    "environments": {
+      "production": {
+        "measurementId": "unset",
+        "propertyId": "unset"
+      },
+      "staging": {
+        "measurementId": "unset",
+        "propertyId": "unset"
+      }
+    }
+  },
+  "googleSearchConsole": {
+    "requiredForPublicWeb": true,
+    "propertyType": "domain",
+    "propertyUrl": "{{PRIMARY_DOMAIN}}",
+    "verificationMethod": "dns-txt",
+    "sitemapSubmissionRequired": true,
+    "urlInspectionApiOptional": true,
+    "serviceAccountSecretName": "GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON"
+  },
+  "events": {
+    "pageViewRequired": true,
+    "conversionEventsDecisionRequiredBeforePublicLaunch": true,
+    "recommendedEvents": ["sign_up", "login", "generate_lead", "purchase", "subscribe"],
+    "eventsMustAvoidPii": true,
+    "serverSideEventsRequireDeduplication": true
+  },
+  "launchGates": {
+    "ga4InstalledBeforePublicLaunch": true,
+    "gscVerifiedBeforePublicLaunch": true,
+    "sitemapSubmittedBeforePublicLaunch": true,
+    "robotsCheckedBeforePublicLaunch": true,
+    "productionUsesDedicatedGa4Property": true
+  },
+  "monitoring": {
+    "postDeployTrafficCheckRequired": true,
+    "organicSearchPerformanceCheckCadence": "weekly",
+    "sitemapCoverageCheckCadence": "weekly",
+    "conversionTrackingSmokeTestRequired": true
+  }
+}
