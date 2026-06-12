@@ -1,0 +1,13 @@
+{
+  "version": "0.1.0",
+  "lastReviewed": "{{CURRENT_DATE}}",
+  "reviewCadenceDays": 30,
+  "policy": {
+    "modelsAreConfiguration": true,
+    "hardcodedModelNamesRequireManifestUpdate": true,
+    "costSource": "docs/COST-PER-CUSTOMER.md plus current provider pricing",
+    "fallbackRequiredForCustomerFacingAI": true
+  },
+  "tasks": []
+}
+

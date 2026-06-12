@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-os.local/contracts/project-os.schema.json",
+  "title": "Project OS Config",
+  "type": "object",
+  "required": ["version", "project", "workflow", "platform", "providers", "automation", "portability"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "project": {
+      "type": "object",
+      "required": ["name", "repository", "defaultBranch", "branchPrefix", "primaryDomain", "primaryLocale", "secondaryLocales"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "repository": { "type": "string", "minLength": 1 },
+        "defaultBranch": { "type": "string", "minLength": 1 },
+        "branchPrefix": { "type": "string" },
+        "primaryDomain": { "type": "string", "minLength": 1 },
+        "primaryLocale": { "type": "string", "minLength": 2 },
+        "secondaryLocales": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "required": ["specDirectory", "reviewVerdictRequired", "issueRequiredForSourceEdits", "shipQueueLabel"],
+      "properties": {
+        "specDirectory": { "type": "string", "minLength": 1 },
+        "featureImpactMap": { "type": "string" },
+        "costModel": { "type": "string" },
+        "reviewVerdictRequired": { "type": "boolean" },
+        "reviewVerdictArtifact": { "type": "string" },
+        "issueRequiredForSourceEdits": { "type": "boolean" },
+        "shipQueueLabel": { "type": "string", "minLength": 1 },
+        "needsFixLabel": { "type": "string" },
+        "productionFailureLabel": { "type": "string" }
+      }
+    },
+    "platform": { "type": "object" },
+    "providers": { "type": "object" },
+    "automation": { "type": "object" },
+    "portability": {
+      "type": "object",
+      "required": ["extractable", "profile", "packs"],
+      "properties": {
+        "extractable": { "type": "boolean" },
+        "profile": { "type": "string", "minLength": 1 },
+        "packs": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}
+

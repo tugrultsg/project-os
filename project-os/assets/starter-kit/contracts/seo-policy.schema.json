@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-os.local/contracts/seo-policy.schema.json",
+  "title": "SEO Policy",
+  "type": "object",
+  "required": ["version", "lastReviewed", "coreWebVitals", "metadata", "indexability", "structuredData", "images", "aiSearchReadiness"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "lastReviewed": { "type": "string", "minLength": 1 },
+    "coreWebVitals": {
+      "type": "object",
+      "required": ["primaryMetrics", "deprecatedMetrics", "mobileFirst"],
+      "properties": {
+        "primaryMetrics": { "type": "array", "items": { "type": "string" } },
+        "deprecatedMetrics": { "type": "array", "items": { "type": "string" } },
+        "mobileFirst": { "type": "boolean" }
+      }
+    },
+    "metadata": { "type": "object" },
+    "indexability": { "type": "object" },
+    "structuredData": { "type": "object" },
+    "images": { "type": "object" },
+    "aiSearchReadiness": { "type": "object" }
+  }
+}
+

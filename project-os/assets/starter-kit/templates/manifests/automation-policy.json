@@ -1,0 +1,41 @@
+{
+  "version": "0.1.0",
+  "lastReviewed": "{{CURRENT_DATE}}",
+  "defaultLanes": {
+    "pullRequestReview": {
+      "status": "default",
+      "enabledByDefault": true,
+      "owner": "project-specific",
+      "purpose": "Review pull requests, fail closed on missing checks, and merge only approved work."
+    },
+    "githubActionsDeploy": {
+      "status": "default",
+      "enabledByDefault": true,
+      "owner": ".github/workflows/deploy.yml",
+      "purpose": "Deploy the default branch and verify health checks."
+    }
+  },
+  "nonDefaultLanes": {
+    "autoExecuteIssue": {
+      "status": "experimental",
+      "enabledByDefault": false,
+      "owner": ".github/workflows/auto-execute.yml",
+      "enableCondition": "Issue must be explicitly labeled auto-execute.",
+      "reason": "This lane grants unattended write and PR permissions, so it must not run on every opened issue."
+    },
+    "dailyAgentRunner": {
+      "status": "legacy-manual",
+      "enabledByDefault": false,
+      "owner": ".claude/run-agents.sh",
+      "reason": "Scheduled broad-trust agent runners require project-specific review before installation."
+    }
+  },
+  "rules": [
+    "Never push directly to the default branch.",
+    "Automation that can merge or deploy must fail closed on missing, pending, failed, or unparseable checks.",
+    "Automation prompts and scripts are runtime automation, not docs-only changes.",
+    "Unattended agents must have an explicit queue label, lock guard, timeout, and recovery path.",
+    "Production deploy success must be based on health/E2E signals, not notification comments."
+  ]
+}
+

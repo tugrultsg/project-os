@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-os.local/contracts/ai-models.schema.json",
+  "title": "AI Models Manifest",
+  "type": "object",
+  "required": ["version", "lastReviewed", "reviewCadenceDays", "policy", "tasks"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "lastReviewed": { "type": "string", "minLength": 1 },
+    "reviewCadenceDays": { "type": "integer", "minimum": 1 },
+    "policy": {
+      "type": "object",
+      "required": ["modelsAreConfiguration", "hardcodedModelNamesRequireManifestUpdate", "fallbackRequiredForCustomerFacingAI"],
+      "properties": {
+        "modelsAreConfiguration": { "type": "boolean" },
+        "hardcodedModelNamesRequireManifestUpdate": { "type": "boolean" },
+        "costSource": { "type": "string" },
+        "fallbackRequiredForCustomerFacingAI": { "type": "boolean" }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "owner", "provider", "currentModel", "fallback", "risk"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string", "minLength": 1 },
+          "provider": { "type": "string", "minLength": 1 },
+          "currentModel": { "type": "string", "minLength": 1 },
+          "tools": { "type": "array", "items": { "type": "string" } },
+          "fallback": { "type": "string", "minLength": 1 },
+          "risk": { "type": "string", "minLength": 1 },
+          "costTrackedIn": { "type": "string" }
+        }
+      }
+    }
+  }
+}
+

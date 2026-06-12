@@ -1,0 +1,44 @@
+{
+  "version": "0.1.0",
+  "lastReviewed": "{{CURRENT_DATE}}",
+  "coreWebVitals": {
+    "primaryMetrics": ["LCP", "INP", "CLS"],
+    "deprecatedMetrics": ["FID"],
+    "mobileFirst": true
+  },
+  "metadata": {
+    "titleRequired": true,
+    "descriptionRequired": true,
+    "canonicalRequired": true,
+    "openGraphRequired": true,
+    "twitterCardRequired": true,
+    "metaKeywordsRankingDependencyAllowed": false
+  },
+  "indexability": {
+    "newPublicPageRequiresIndexIntent": true,
+    "newDynamicRouteRequiresSitemapDecision": true,
+    "changedUrlRequiresRedirectDecision": true,
+    "sitemapLastModifiedMustReflectContentChange": true
+  },
+  "structuredData": {
+    "jsonLdPreferred": true,
+    "escapeJsonLdLessThan": true,
+    "faqPageForGoogleRichResultsAllowedFor": ["government", "healthcare"],
+    "faqPageOnCommercialSites": "allowed only for content structure or AI citation readiness, not as a Google rich-result promise",
+    "howToSchemaRecommended": false
+  },
+  "images": {
+    "altTextRequiredForInformativeImages": true,
+    "decorativeImagesMustBeHidden": true,
+    "ogImagesShouldBePageSpecific": true,
+    "belowFoldImagesShouldLazyLoad": true,
+    "dimensionsRequiredToAvoidCls": true
+  },
+  "aiSearchReadiness": {
+    "brandEntityClear": true,
+    "crawlableTextRequired": true,
+    "llmsTxtDecisionRequiredForGeneratedSites": true,
+    "passagesShouldBeCitable": true
+  }
+}
+

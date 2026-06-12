@@ -1,0 +1,44 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // .tool_input.filePath' 2>/dev/null); if echo \"$FILE\" | grep -qE '(docs/|\\.claude/|\\.github/|\\.gitignore|package\\.json)' || echo \"$FILE\" | grep -qE '\\.(md|json|yml|yaml)$'; then exit 0; fi; if echo \"$FILE\" | grep -qE '\\.(ts|tsx|js|jsx|css)$'; then PROJ_DIR=$(git rev-parse --show-toplevel 2>/dev/null || pwd); if [ ! -f \"$PROJ_DIR/.claude/.current-issue\" ]; then echo '{\"decision\":\"block\",\"reason\":\"BLOCKED: No approved issue marker. Follow Project OS workflow: Plan -> Plan Hardening -> Review Verdict -> GH Issue -> User Approval -> Execute.\"}'; exit 0; fi; fi; exit 0",
+            "statusMessage": "Checking Project OS issue gate..."
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=\"$CLAUDE_TOOL_INPUT_FILE_PATH\"; if [ -z \"$FILE\" ]; then FILE=$(jq -r '.tool_input.file_path // .tool_input.filePath // empty' 2>/dev/null); fi; if echo \"$FILE\" | grep -qE '(docs/|\\.claude/|\\.github/|\\.gitignore|package\\.json)' || echo \"$FILE\" | grep -qE '\\.(md|json|yml|yaml)$'; then exit 0; fi; if echo \"$FILE\" | grep -qE '\\.(ts|tsx|js|jsx|css)$'; then PROJ_DIR=$(git rev-parse --show-toplevel 2>/dev/null || pwd); if [ ! -f \"$PROJ_DIR/.claude/.current-issue\" ]; then echo '{\"decision\":\"block\",\"reason\":\"BLOCKED: No approved issue marker. Follow Project OS workflow before creating source files.\"}'; exit 0; fi; fi; exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMD=\"$CLAUDE_TOOL_INPUT_COMMAND\"; if echo \"$CMD\" | grep -qE 'gh issue create|gh pr create'; then PROJ_DIR=$(git rev-parse --show-toplevel 2>/dev/null || pwd); if [ ! -f \"$PROJ_DIR/.claude/.blueprint-approved\" ] && [ ! -f \"$PROJ_DIR/.claude/.plan-review-approved\" ]; then echo '{\"decision\":\"block\",\"reason\":\"BLOCKED: Plan review verdict not completed.\"}'; exit 0; fi; fi; exit 0",
+            "statusMessage": "Checking Project OS review verdict..."
+          }
+        ]
+      }
+    ]
+  }
+}
+

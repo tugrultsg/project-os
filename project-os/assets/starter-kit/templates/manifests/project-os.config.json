@@ -1,0 +1,53 @@
+{
+  "version": "0.1.0",
+  "project": {
+    "name": "{{PROJECT_NAME}}",
+    "repository": "{{REPOSITORY}}",
+    "defaultBranch": "{{DEFAULT_BRANCH}}",
+    "branchPrefix": "{{BRANCH_PREFIX}}",
+    "primaryDomain": "{{PRIMARY_DOMAIN}}",
+    "primaryLocale": "{{PRIMARY_LOCALE}}",
+    "secondaryLocales": []
+  },
+  "workflow": {
+    "specDirectory": "docs/specs",
+    "featureImpactMap": "docs/FEATURE-IMPACT-MAP.md",
+    "costModel": "docs/COST-PER-CUSTOMER.md",
+    "reviewVerdictRequired": true,
+    "reviewVerdictArtifact": "spec-or-issue review verdict, optional .claude/.plan-review-approved local marker, or legacy .claude/.blueprint-approved",
+    "issueRequiredForSourceEdits": true,
+    "shipQueueLabel": "ship-queue",
+    "needsFixLabel": "needs-fix",
+    "productionFailureLabel": "deploy-failure"
+  },
+  "platform": {
+    "runtime": "cloudflare",
+    "appDeploy": "cloudflare-workers-or-pages",
+    "workers": true,
+    "database": ["cloudflare-d1"],
+    "storage": ["cloudflare-r2"],
+    "queues": true,
+    "scheduledWorkers": true
+  },
+  "providers": {
+    "auth": "unset",
+    "payments": "unset",
+    "email": "unset",
+    "cms": "unset",
+    "ai": "unset",
+    "analytics": "unset"
+  },
+  "automation": {
+    "primaryReviewLane": "codex-or-claude-pr-queue",
+    "primaryDeployLane": "github-actions-cloudflare-deploy",
+    "notificationIssue": null,
+    "notificationTopic": null,
+    "legacyClaudeAllowed": false
+  },
+  "portability": {
+    "extractable": true,
+    "profile": "{{PROFILE}}",
+    "packs": ["project-os-core", "cloudflare-fullstack", "seo-core"]
+  }
+}
+
