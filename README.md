@@ -74,3 +74,7 @@ node ~/.codex/skills/project-os/scripts/check-project-os.mjs --root /path/to/rep
 The bootstrap script writes only inside the requested target directory. It does
 not deploy infrastructure, create secrets, push branches, or overwrite existing
 files unless `--force` is provided.
+
+## License
+
+MIT. See `LICENSE`.
