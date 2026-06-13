@@ -10,9 +10,10 @@ const dryRun = args.includes('--dry-run');
 const writeEnvLocal = args.includes('--write-env-local');
 const force = args.includes('--force');
 const allowUnignoredEnv = args.includes('--allow-unignored-env');
+const ensureGitignore = args.includes('--ensure-gitignore');
 
 if (!target || !profileFile || (!dryRun && !writeEnvLocal)) {
-  console.error('Usage: node project-os/scripts/seed-project-secrets.mjs --target <dir> --profile-file <private-profile.json> (--dry-run | --write-env-local) [--force]');
+  console.error('Usage: node project-os/scripts/seed-project-secrets.mjs --target <dir> --profile-file <private-profile.json> (--dry-run | --write-env-local) [--force] [--ensure-gitignore]');
   process.exit(1);
 }
 
@@ -73,6 +74,7 @@ if (dryRun) {
 }
 
 if (writeEnvLocal) {
+  if (ensureGitignore) ensureEnvLocalIgnored(targetRoot);
   assertEnvLocalIgnored(targetRoot);
   const envPath = path.join(targetRoot, '.env.local');
   const existingText = existsSync(envPath) ? readFileSync(envPath, 'utf8') : '';
@@ -83,6 +85,18 @@ if (writeEnvLocal) {
   console.log(`Added: ${result.added.length === 0 ? 'none' : result.added.join(', ')}`);
   console.log(`Updated: ${result.updated.length === 0 ? 'none' : result.updated.join(', ')}`);
   console.log(`Skipped existing: ${result.skipped.length === 0 ? 'none' : result.skipped.join(', ')}`);
+}
+
+function ensureEnvLocalIgnored(root) {
+  const gitignorePath = path.join(root, '.gitignore');
+  const existingText = existsSync(gitignorePath) ? readFileSync(gitignorePath, 'utf8') : '';
+  const lines = existingText.split(/\r?\n/).map((line) => line.trim());
+  if (lines.some((line) => line === '.env.local' || line === '.env*' || line === '*.local')) {
+    return;
+  }
+
+  const nextText = `${existingText.replace(/\s*$/, '')}${existingText.trim().length > 0 ? '\n' : ''}.env.local\n`;
+  writeFileSync(gitignorePath, nextText);
 }
 
 function valueFor(name) {

@@ -84,12 +84,30 @@ node ~/.codex/skills/project-os/scripts/seed-project-secrets.mjs \
 
 node ~/.codex/skills/project-os/scripts/seed-project-secrets.mjs \
   --write-env-local \
+  --ensure-gitignore \
   --target /path/to/repo \
   --profile-file ~/.config/project-os/personal.json
 ```
 
 The seeder never prints secret values and refuses to write `.env.local` unless
 the target repo ignores it.
+
+Shortcut for your own projects:
+
+```bash
+node ~/.codex/skills/project-os/scripts/apply-project-os.mjs \
+  --target /path/to/repo \
+  --use-my-secrets
+
+node ~/.codex/skills/project-os/scripts/apply-project-os.mjs \
+  --target /path/to/repo \
+  --use-my-secrets \
+  --yes
+```
+
+The wrapper auto-discovers `PROJECT_OS_PROFILE`,
+`~/.config/project-os/personal.json`, or `~/.project-os/profile.json`, then
+bootstraps, checks, and seeds `.env.local` from your environment.
 
 ## Files Created
 

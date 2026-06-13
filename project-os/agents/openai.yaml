@@ -1,4 +1,4 @@
 interface:
   display_name: "Project OS"
-  short_description: "Bootstrap reusable Claude/Codex project workflows"
-  default_prompt: "Use $project-os to bootstrap this repository with a Cloudflare-first Claude and Codex project operating system."
+  short_description: "Bootstrap Claude/Codex workflows with private profiles"
+  default_prompt: "Use $project-os to bootstrap this repository with my private profile and local secrets."

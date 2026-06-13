@@ -56,6 +56,8 @@ overwrite unrelated user work casually.
 ## Bundled Resources
 
 - `scripts/bootstrap-project-os.mjs`: copies Project OS files into a target repo.
+- `scripts/apply-project-os.mjs`: one-command wrapper for bootstrap, check, and
+  optional local secret seeding from a private profile.
 - `scripts/check-project-os.mjs`: validates an installed Project OS.
 - `scripts/seed-project-secrets.mjs`: seeds local `.env.local` from private
   profile environment references without printing secret values.
@@ -88,6 +90,9 @@ node ~/.codex/skills/project-os/scripts/bootstrap-project-os.mjs ...
 - Run `seed-project-secrets.mjs` only with explicit `--dry-run` or
   `--write-env-local`; it must not print values and must require `.env.local` to
   be ignored unless explicitly overridden.
+- When the user says "use my secrets", prefer `apply-project-os.mjs
+  --use-my-secrets`; it auto-discovers `PROJECT_OS_PROFILE`,
+  `~/.config/project-os/personal.json`, then `~/.project-os/profile.json`.
 - The bootstrap script must not deploy infrastructure, create secrets, push
   branches, or write outside the requested target directory.
 - Claude and Codex share the same review verdict contract, but they use separate
@@ -108,6 +113,27 @@ node path/to/project-os/scripts/check-project-os.mjs --root /path/to/repo
 The checker validates required manifests, JSON parsing, secret-value policy,
 automation defaults, SEO baseline, GA4/GSC launch gates, and Claude/Codex
 marker separation.
+
+## One-Command Personal Workflow
+
+For "install/use Project OS with my secrets", run:
+
+```bash
+node path/to/project-os/scripts/apply-project-os.mjs \
+  --target /path/to/repo \
+  --use-my-secrets
+```
+
+This is a dry run. To apply:
+
+```bash
+node path/to/project-os/scripts/apply-project-os.mjs \
+  --target /path/to/repo \
+  --use-my-secrets \
+  --yes
+```
+
+The wrapper must not create remote GitHub, Cloudflare, or Google secrets.
 
 ## When Publishing Or Updating This Skill
 
