@@ -57,6 +57,9 @@ overwrite unrelated user work casually.
 
 - `scripts/bootstrap-project-os.mjs`: copies Project OS files into a target repo.
 - `scripts/check-project-os.mjs`: validates an installed Project OS.
+- `scripts/seed-project-secrets.mjs`: seeds local `.env.local` from private
+  profile environment references without printing secret values.
+- `assets/private-profile.example.json`: example private profile shape.
 - `assets/starter-kit/contracts/`: JSON schemas for manifests.
 - `assets/starter-kit/templates/`: generic manifest templates.
 - `assets/starter-kit/adapters/codex/`: Codex `AGENTS.md` and review docs.
@@ -77,8 +80,14 @@ node ~/.codex/skills/project-os/scripts/bootstrap-project-os.mjs ...
 ## Safety Rules
 
 - Do not put secret values in manifests, docs, prompts, or logs.
+- Do not put secret values in public profile examples or committed profile files.
 - `secrets.manifest.json` lists names, destinations, owners, and required status
   only.
+- Use `--profile-file` for private reusable defaults and environment-variable
+  references. Profile files should live outside the project repo.
+- Run `seed-project-secrets.mjs` only with explicit `--dry-run` or
+  `--write-env-local`; it must not print values and must require `.env.local` to
+  be ignored unless explicitly overridden.
 - The bootstrap script must not deploy infrastructure, create secrets, push
   branches, or write outside the requested target directory.
 - Claude and Codex share the same review verdict contract, but they use separate

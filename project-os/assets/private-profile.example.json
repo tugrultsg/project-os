@@ -1,0 +1,55 @@
+{
+  "version": "0.1.0",
+  "defaults": {
+    "defaultBranch": "main",
+    "branchPrefix": "codex/",
+    "primaryLocale": "en",
+    "profile": "cloudflare-fullstack-saas"
+  },
+  "project": {
+    "repository": "owner/repository",
+    "primaryDomain": "https://example.com"
+  },
+  "analytics": {
+    "googleAnalytics4": {
+      "measurementId": "unset",
+      "propertyId": "unset",
+      "productionMeasurementId": "unset",
+      "productionPropertyId": "unset",
+      "stagingMeasurementId": "unset",
+      "stagingPropertyId": "unset",
+      "serviceAccountSecretName": "GOOGLE_ANALYTICS_SERVICE_ACCOUNT_JSON"
+    },
+    "googleSearchConsole": {
+      "propertyType": "domain",
+      "verificationMethod": "dns-txt",
+      "serviceAccountSecretName": "GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON"
+    }
+  },
+  "secretSources": {
+    "CLOUDFLARE_API_TOKEN": {
+      "fromEnv": "CLOUDFLARE_API_TOKEN",
+      "required": true,
+      "destinations": ["local", "github-actions"],
+      "owner": "platform"
+    },
+    "CLOUDFLARE_ACCOUNT_ID": {
+      "fromEnv": "CLOUDFLARE_ACCOUNT_ID",
+      "required": true,
+      "destinations": ["local", "github-actions"],
+      "owner": "platform"
+    },
+    "GOOGLE_ANALYTICS_SERVICE_ACCOUNT_JSON": {
+      "fromEnv": "GOOGLE_ANALYTICS_SERVICE_ACCOUNT_JSON",
+      "required": false,
+      "destinations": ["local", "github-actions"],
+      "owner": "growth"
+    },
+    "GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON": {
+      "fromEnv": "GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON",
+      "required": false,
+      "destinations": ["local", "github-actions"],
+      "owner": "growth"
+    }
+  }
+}

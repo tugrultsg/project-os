@@ -54,6 +54,43 @@ Validate:
 node ~/.codex/skills/project-os/scripts/check-project-os.mjs --root /path/to/repo
 ```
 
+## Private Profiles
+
+For your own projects, keep reusable defaults and secret sources in a private
+profile outside the public repo. Start from:
+
+```text
+~/.codex/skills/project-os/assets/private-profile.example.json
+```
+
+Then run bootstrap with the profile:
+
+```bash
+node ~/.codex/skills/project-os/scripts/bootstrap-project-os.mjs \
+  --target /path/to/repo \
+  --profile-file ~/.config/project-os/personal.json
+```
+
+The profile may contain reusable IDs and environment variable references, but it
+should not contain secret values.
+
+To seed local secrets from your current shell environment:
+
+```bash
+node ~/.codex/skills/project-os/scripts/seed-project-secrets.mjs \
+  --dry-run \
+  --target /path/to/repo \
+  --profile-file ~/.config/project-os/personal.json
+
+node ~/.codex/skills/project-os/scripts/seed-project-secrets.mjs \
+  --write-env-local \
+  --target /path/to/repo \
+  --profile-file ~/.config/project-os/personal.json
+```
+
+The seeder never prints secret values and refuses to write `.env.local` unless
+the target repo ignores it.
+
 ## Files Created
 
 - `project-os.config.json`

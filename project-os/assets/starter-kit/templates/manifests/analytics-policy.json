@@ -3,31 +3,31 @@
   "lastReviewed": "{{CURRENT_DATE}}",
   "googleAnalytics4": {
     "requiredForPublicWeb": true,
-    "measurementId": "unset",
-    "propertyId": "unset",
+    "measurementId": "{{GA4_MEASUREMENT_ID}}",
+    "propertyId": "{{GA4_PROPERTY_ID}}",
     "consentModeRequired": true,
     "piiCollectionAllowed": false,
     "debugModeAllowedOutsideProduction": true,
-    "serviceAccountSecretName": "GOOGLE_ANALYTICS_SERVICE_ACCOUNT_JSON",
+    "serviceAccountSecretName": "{{GA4_SERVICE_ACCOUNT_SECRET_NAME}}",
     "environments": {
       "production": {
-        "measurementId": "unset",
-        "propertyId": "unset"
+        "measurementId": "{{GA4_PRODUCTION_MEASUREMENT_ID}}",
+        "propertyId": "{{GA4_PRODUCTION_PROPERTY_ID}}"
       },
       "staging": {
-        "measurementId": "unset",
-        "propertyId": "unset"
+        "measurementId": "{{GA4_STAGING_MEASUREMENT_ID}}",
+        "propertyId": "{{GA4_STAGING_PROPERTY_ID}}"
       }
     }
   },
   "googleSearchConsole": {
     "requiredForPublicWeb": true,
-    "propertyType": "domain",
+    "propertyType": "{{GSC_PROPERTY_TYPE}}",
     "propertyUrl": "{{PRIMARY_DOMAIN}}",
-    "verificationMethod": "dns-txt",
+    "verificationMethod": "{{GSC_VERIFICATION_METHOD}}",
     "sitemapSubmissionRequired": true,
     "urlInspectionApiOptional": true,
-    "serviceAccountSecretName": "GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT_JSON"
+    "serviceAccountSecretName": "{{GSC_SERVICE_ACCOUNT_SECRET_NAME}}"
   },
   "events": {
     "pageViewRequired": true,
